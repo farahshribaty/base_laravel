@@ -13,7 +13,7 @@ class WishListRepository extends CrudBaseRepository implements WishListInterface
 
     public function __construct() {
         parent::__construct(new Wishlist());
-        
+
         $this->relations = [];
         $this->filterable = [
             // "search" =>[
@@ -24,7 +24,7 @@ class WishListRepository extends CrudBaseRepository implements WishListInterface
             // ],
             // 'custom'=> function($query){
             //     $query->select('id');
-            // },  
+            // },
         ];
 
     }
@@ -35,14 +35,14 @@ class WishListRepository extends CrudBaseRepository implements WishListInterface
             // Handle the case where the user is not found
             return response()->json(['error' => 'User not found'], 404);
         }
-        
+
         $userWishlist = Wishlist::where('user_id', $userId)
-        ->select('id', 'user_id', 'product_id') 
+        ->select('id', 'user_id', 'product_id')
         ->with('product:id,product_price,product_main_image') // Eager load product information with selected fields
         ->get();
 
         return $userWishlist;
-    
+
     }
     public function addProductToWishlist($userId, $productId){
         $user = User::find($userId);
@@ -52,10 +52,15 @@ class WishListRepository extends CrudBaseRepository implements WishListInterface
             return false;
         }
 
-        $wishlist = Wishlist::create([
+        $wishlist = $this->create([
             'user_id' => $userId,
             'product_id' => $productId,
         ]);
+
+        // $wishlist = Wishlist::create([
+        //     'user_id' => $userId,
+        //     'product_id' => $productId,
+        // ]);
 
         return $wishlist;
     }
@@ -66,8 +71,8 @@ class WishListRepository extends CrudBaseRepository implements WishListInterface
         if (!$wishlistItem) {
             return false;
         }
-
-        $wishlistItem->delete();
+        $this->delete($wishlistItem->id);
+        // $wishlistItem->delete();
         return true;
     }
 

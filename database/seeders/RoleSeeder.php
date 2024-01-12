@@ -16,8 +16,9 @@ class RoleSeeder extends Seeder
     {
         $roles = ['super_admin', 'admin'];
 
+
         foreach ($roles as $role) {
-            \App\Models\Role::create([
+            \App\Models\Role::firstOrCreate([
                 'name' => $role,
             ]);
         }

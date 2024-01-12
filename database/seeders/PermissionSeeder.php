@@ -14,10 +14,10 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $permissions = [''];
+        $permissions = [];
 
         foreach ($permissions as $permission) {
-            \App\Models\Permission::create([
+            \App\Models\Permission::firstOrCreate([
                 'name' => $permission,
             ]);
         }
