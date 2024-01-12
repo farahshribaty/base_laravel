@@ -26,7 +26,6 @@ class LanguageHeaderSwitcher
             App::setLocale(config('app.fallback_locale'));
             $request['language_id'] = 1;
         }
-
         return $next($request);
     }
 }
