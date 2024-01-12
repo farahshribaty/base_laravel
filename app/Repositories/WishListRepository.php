@@ -56,12 +56,6 @@ class WishListRepository extends CrudBaseRepository implements WishListInterface
             'user_id' => $userId,
             'product_id' => $productId,
         ]);
-
-        // $wishlist = Wishlist::create([
-        //     'user_id' => $userId,
-        //     'product_id' => $productId,
-        // ]);
-
         return $wishlist;
     }
     public function removeProductFromWishlist($userId, $productId){

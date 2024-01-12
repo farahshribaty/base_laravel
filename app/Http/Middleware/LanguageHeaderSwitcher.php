@@ -12,12 +12,7 @@ class LanguageHeaderSwitcher
  
     public function handle(Request $request, Closure $next)
     {
-        //     $routeName = Route::currentRouteName();
-        //     $routes = Route::getRoutes();
-            
-        // $routeNamesInFile = collect($routes)->map->getName();
-
-        // dd($routeNamesInFile);
+       
         $langFromRequest = $request->header('language') ; 
         if ($langFromRequest== 'ar' || $langFromRequest == 'en') {
             App::setLocale($langFromRequest);

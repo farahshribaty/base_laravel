@@ -25,8 +25,8 @@ class LoginRequest extends BaseRequestForm
     public function rules()
     {
         return [
-            // 'email' => 'required|email|exists:admins,email',
-            // 'password' => 'required|string|max:255|min:8',
+            'email' => 'required|email|exists:admins,email',
+            'password' => 'required|string|max:255|min:8',
         ];
     }
 }

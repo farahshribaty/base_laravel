@@ -14,19 +14,26 @@ class AuthRepository implements AuthInterface{
             'email'    => $email,
             'password' => $password,
         ];
-        //  dd(auth()->guard('admin')?->attempt($credentials));
-        // if (Auth::guard('admin')->validate($credentials)) {
-            $admin = Admin::where('email' , $email)->first();
-            $token = $admin->createToken('admin-token')->plainTextToken;
-
-            return $token;
-        // }
-
-        return null;
+        $admin = Admin::where('email', $credentials['email'])->first();
+    
+        if (!$admin ||$admin->password !== $credentials['password']) {
+            return response([
+                'msg' => 'incorrect username or password'
+            ], 401);
+        }
+        $token = $admin->createToken('admin')->plainTextToken;
+        return [
+            'admin' => $admin,
+            'token' => $token,
+        ];
     }
 
     public function AdminLogout(){
-        Auth::guard('admin')->user()->tokens()->delete();
+        auth()->user()->tokens()->delete();
+        // dd(Auth::guard('admin')->user()->id);
+        // Auth::guard('admin')->user()->tokens()->delete();
+        // Auth::user()->getRememberToken()->delete();
+        // Auth::user()->tokens()->where('id', Auth::user()->currentAccessToken()->id)->delete();
     }
 
 }
