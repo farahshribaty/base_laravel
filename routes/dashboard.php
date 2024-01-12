@@ -12,7 +12,7 @@ Route::prefix('admin')->group(function(){
         Route::post('/add' , [CategoryController::class , 'create'])->name('premission_add_product');
         Route::post('/update' , [CategoryController::class , 'update'])->name('permission_update_category');
         Route::post('/delete' , [CategoryController::class , 'delete'])->name('premission_delete_product');
-    }); 
+    });
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -23,7 +23,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Logout
         Route::get('logout', [AuthController::class, 'logout']);
-    }); 
+    });
 });
 // Route::prefix('product')->group(function(){
 //     Route::get('/getOne' , [ProductController::class , 'getOne']);

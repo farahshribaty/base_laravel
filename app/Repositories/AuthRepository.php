@@ -1,26 +1,33 @@
-<?php 
+<?php
 
 namespace App\Repositories;
 
 use App\Interfaces\AuthInterface;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthRepository implements AuthInterface{
 
     public function AdminLogin($email , $password){
 
+
+
         $credentials = [
             'email'    => $email,
             'password' => $password,
         ];
-        $admin = Admin::where('email', $credentials['email'])->first();
-    
-        if (!$admin ||$admin->password !== $credentials['password']) {
-            return response([
-                'msg' => 'incorrect username or password'
-            ], 401);
-        }
+         $admin = Admin::where('email', $credentials['email'])->first();
+
+         // check  if email is valid
+         if(!$admin){
+            return 1;
+         }
+         // check if two password are same
+         if(!Hash::check($password , $admin->password)){
+            return 2;
+         }
+
         $token = $admin->createToken('admin')->plainTextToken;
         return [
             'admin' => $admin,

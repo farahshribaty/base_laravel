@@ -36,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
 
 
                 Route::middleware('api')
-                ->middleware('languageSwitcher')
+                // ->middleware('languageSwitcher')
                 ->prefix('api')
                 ->group(base_path('routes/dashboard.php'));
 
