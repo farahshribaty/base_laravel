@@ -19,13 +19,10 @@ class AuthRepository implements AuthInterface{
         ];
          $admin = Admin::where('email', $credentials['email'])->first();
 
-         // check  if email is valid
-         if(!$admin){
-            return 1;
-         }
+
          // check if two password are same
          if(!Hash::check($password , $admin->password)){
-            return 2;
+            return false;
          }
 
         $token = $admin->createToken('admin')->plainTextToken;
