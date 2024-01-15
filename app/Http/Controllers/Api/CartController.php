@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddProductToCartRequest;
 use App\Http\Resources\CartCollection;
 use App\Interfaces\CartInterface;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -31,4 +32,5 @@ class CartController extends Controller
     }
     public function removeProductFromCart(){
     }
+   
 }

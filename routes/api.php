@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\CategoryController as ApiCategoryController;
 use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Api\WishListController as ApiWishListController;
 use App\Http\Controllers\Api\CartController as ApiCartController;
+use App\Http\Controllers\Api\OrderController as ApiOrderController;
+use App\Http\Controllers\Api\UserController as ApiUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::post('register', [UserController::class, 'register']);
-// Route::post('login', [UserController::class, 'login']);
+
 // user api 
 Route::prefix('user')->group(function(){
     Route::get('/getAll' , [ApiCategoryController::class , 'getAll']);
@@ -32,6 +33,11 @@ Route::prefix('user')->group(function(){
     Route::get('/getAllProducts' , [ApiProductController::class , 'getAll']);
     Route::get('/getOneProduct' , [ApiProductController::class , 'getOne']);
     Route::get('/searchProduct', [ApiProductController::class, 'searchProduct']);
+
+    Route::post('register', [ApiUserController::class, 'register']);
+    Route::post('login', [ApiUserController::class, 'login']);
+    Route::post('logout', [ApiUserController::class, 'logout']);
+
 
 });
 
@@ -45,9 +51,18 @@ Route::prefix('cart')->group(function(){
             Route::get('/details', [ApiCartController::class, 'getCartDetails']);
             Route::post('/add_product', [ApiCartController::class, 'addProductToCart']);
             Route::post('/remove_product', [ApiCartController::class, 'removeProductFromCart']);
-        });
+});
  
+Route::group(['prefix' => 'order'], function () {
+    Route::post('checkout', [ApiOrderController::class, 'userCheckout']);
+    Route::get('all', [ApiOrderController::class, 'getUserOrders']);
+    Route::get('details', [ApiOrderController::class, 'getOrderTrackDetails']);
+    // Route::get('get_checkout', [ApiOrderController::class, 'getPaymentClientSecret']);
+});
 
+// New Payment Gateaway
+Route::post('create_payment', [OrderController::class, 'createPaymentUsingDibsy']);
+    
 // Route::post('register', [AuthController::class, 'register']);
 // Route::post('verify_code', [AuthController::class, 'verifiedCode']);
 // Route::post('resend_code', [AuthController::class, 'resendCode']);

@@ -138,6 +138,14 @@ class ProductRepository extends CrudBaseRepository implements ProductInterface {
         
         return $products;
     }
+    public static function substractQuantityIncreasePurchaseCount($product_id, $purchased_quantity){
+        $product = Product::where('id', $product_id)->first();
+
+        $product->product_quantity = $product->product_quantity - $purchased_quantity;
+        $product->product_purchasing_count = $product->product_purchasing_count + 1;
+        
+        $product->save();
+    }
 
     
 

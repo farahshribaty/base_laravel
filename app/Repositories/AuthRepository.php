@@ -34,10 +34,6 @@ class AuthRepository implements AuthInterface{
 
     public function AdminLogout(){
         auth()->user()->tokens()->delete();
-        // dd(Auth::guard('admin')->user()->id);
-        // Auth::guard('admin')->user()->tokens()->delete();
-        // Auth::user()->getRememberToken()->delete();
-        // Auth::user()->tokens()->where('id', Auth::user()->currentAccessToken()->id)->delete();
     }
 
 }
